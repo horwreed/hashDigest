@@ -1,12 +1,12 @@
 Here are the answers to the two questions asked in the coding problems:
 
-
 Problem 1:What would the bottleneck(s) be in your implementation as number of request/second increase?
 How would you scale your microservice?
 
-The bottleneck of the implementation is computing the sha256 hash. This is an O(n) operation (as you have to do operations on O(n) blocks). To scale, I would have try to do some load balancing [I'm not really sure]  
+The bottleneck of the implementation is computing the sha256 hash. This is an O(k) operation (where k is the length of the message) and probably has more constants than any of the other O(k) operations that require copying or walking through the whole message. As the system scaled and the number of requests/second increased, a number of changes would have to be made to remain performant. First, storing the messages to hash map could no longer be done in memory and would have to move to some type of persistent store writing to a database. It would also make sense to move towards a distributed solution with multiple webservers running over a potentially wide geographical area in order to handle multiple requests at once. This system gets considerably more complex as it becomes more distributed as we have to also solve the problem of making sure all of the webservers have access to the persistent store that stays up to date with data coming from the different webservers. The bottleneck in this world becomes the data retrieval from the store. This could be mitigated by caching some of the data closer to the individual webservers, potentially with information from requests made in the same geographical area.                                       
 
 Problem 2: There may be many rows in the file, so be sure to optimize your solution to scale.
 What is the big O notation for your program?
 
 O(nlogn)
+
