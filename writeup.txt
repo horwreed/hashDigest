@@ -1,0 +1,12 @@
+Here are the answers to the two questions asked in the coding problems:
+
+
+Problem 1:What would the bottleneck(s) be in your implementation as number of request/second increase?
+How would you scale your microservice?
+
+The bottleneck of the implementation is computing the sha256 hash. This is an O(n) operation (as you have to do operations on O(n) blocks). To scale, I would have try to do some load balancing [I'm not really sure]  
+
+Problem 2: There may be many rows in the file, so be sure to optimize your solution to scale.
+What is the big O notation for your program?
+
+O(nlogn)

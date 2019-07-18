@@ -1,0 +1,2 @@
+Taco, 1000
+Ice Cream, 500
